@@ -1,0 +1,50 @@
+# wazuh
+sudo apt-get install gnupg apt-transport-https curl
+curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
+10.0.0.132="10.0.0.2" sudo apt-get install wazuh-agent
+sudo systemctl daemon-reload
+sudo systemctl enable wazuh-agent
+sudo systemctl start wazuh-agent
+
+# suricata
+sudo apt install suricata syslog-ng
+
+
+# elastic search
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt update && sudo apt install elasticsearch
+sudo systemctl enable --now elasticsearch   
+sudo systemctl start elasticsearch.service
+
+# kibana
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
+sudo apt-get update && sudo apt-get install kibana   
+
+
+
+# https://syslog-ng.github.io/admin-guide/040_Quick-start_guide/003_Managing_and_checking_syslog-ng_OSE_service_on_Linux
+nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier
+source s_net {
+    udp(
+        ip(0.0.0.0)
+        port(514)
+    );
+}; # uncomment line après source s_src
+destination d_test {
+    file("/var/log/network-test.log");
+};
+
+log {
+    source(s_net);
+    destination(d_test);
+}; # ajouter après "Send the messages to an other host" pour tester la connection avec Elasticsearch
+sudo syslog-ng -s # vérifier s'il y a des erreur
+sudo systemctl restart syslog-ng
+sudo ss -lunp | grep 514 # s'il entend le port 514
+>>>> UNCONN 0      0            0.0.0.0:514        0.0.0.0:*    users:(("syslog-ng",pid=19291,fd=11)) 
+logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
+sudo cat /var/log/network-test.log 
+>>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
