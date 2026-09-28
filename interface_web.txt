@@ -1,0 +1,12 @@
+verification du fonctionnement du serveur :
+
+sudo ss -ltnp | grep 5601
+LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22))   
+curl -I http://127.0.0.1:5601
+-> se connecter à http://127.0.0.1:5601
+
+sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
+-> rentrer le code dans le site
+sudo /usr/share/kibana/bin/kibana-verification-code
+-> rentrer le code de vérification dans le site
+Attention, il faut la même version de kibana et de elasticsearch
