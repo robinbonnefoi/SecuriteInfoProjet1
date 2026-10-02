@@ -83,3 +83,53 @@ sudo ss -lunp | grep 514 # s'il entend le port 514
 logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
 sudo cat /var/log/network-test.log 
 >>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
+
+
+# configation entre syslog et wazuh agent
+
+# verifer les fichiers dans lesquels syslog ng écrits
+sudo grep -rn "file(" /etc/syslog-ng/syslog-ng.conf /etc/syslog-ng/conf.d/
+
+# verifier que les fichiers existent et se remplissent
+ls -l /var/log/syslog /var/log/auth.log
+sudo tail -n 5 /var/log/auth.log
+logger "test syslog-ng"
+sudo tail -n 2 /var/log/syslog
+
+sudo nano /var/ossec/etc/ossec.conf
+---->
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/syslog</location>
+  </localfile>
+
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/auth.log</location>
+  </localfile>
+
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/remote/*/*.log</location>
+  </localfile>
+
+#verifier la syntaxe 
+sudo /var/ossec/bin/wazuh-logcollector -t
+
+#redemarrer wazuh
+sudo systemctl restart wazuh-agent
+sudo systemctl status wazuh-agent
+
+# verifier que cela fonctionne
+
+# provoquer une erreur ssh
+ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
+
+# verifier que syslog a ecrit la ligne
+sudo grep utilisateur_bidon /var/log/auth.log | tail -n 5
+
+# verifier que wazuh agent l'a lu
+sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log
+
+# verifier que wazuh manager l'a lu
+sudo tail -f /var/ossec/logs/alerts/alerts.json | grep -i utilisateur_bidon
