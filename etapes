@@ -1,4 +1,4 @@
-# wazuh
+# wazuh agent
 sudo apt-get install gnupg apt-transport-https curl
 curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
 echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list 10.0.0.132="10.0.0.2" 
@@ -12,6 +12,12 @@ sudo apt-get install wazuh-agent
 sudo systemctl daemon-reload
 sudo systemctl enable wazuh-agent
 sudo systemctl start wazuh-agent
+
+# wazuh manager
+sudo apt install -y wazuh-manager
+sudo systemctl daemon-reload
+sudo systemctl enable --now wazuh-manager
+sudo systemctl status wazuh-manager
 
 # suricata
 sudo apt install suricata syslog-ng
