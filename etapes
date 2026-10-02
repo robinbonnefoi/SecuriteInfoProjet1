@@ -156,16 +156,7 @@ sudo systemctl restart wazuh-manager
 filebeat : 
 
 sudo apt-get install elasticsearch -y
-sudo nano /etc/elasticsearch/elasticsearch.yml
-# Autoriser les connexions locales
-network.host: 127.0.0.1
-http.port: 9200
 
-# Spécifier que c'est un serveur de développement (1 seul noeud)
-discovery.type: single-node
-
-# Désactiver la sécurité pour le laboratoire (évite les blocages de certificats SSL avec Filebeat/Kibana)
-xpack.security.enabled: true
 
 sudo systemctl daemon-reload
 sudo systemctl enable elasticsearch
