@@ -10,3 +10,23 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope 
 sudo /usr/share/kibana/bin/kibana-verification-code
 -> rentrer le code de vérification dans le site
 Attention, il faut la même version de kibana et de elasticsearch
+recuperer son mot de passe :
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe
+
+sur le site : http://127.0.0.1:5601
+nom d'utilisateur : elastic
+mot de passe : mot de passe recuperer par la commande
+
+Kibana : 
+connexion http : http://127.0.0.1:5601
+
+menu de gauche -> Management -> Stack Management 
+Puis menu de gauche -> Kibana -> Data views
+Puis Create data view :
+	Name : parametre de notre choix
+	Index pattern : le pattern d'index utilisé
+	puis save data view
+	
+Analytics puis Discover pour voir les analyses
+On peut filtrer par niveau de dangerosité dans le QKL avec la formule rule.level >= 10
+avec le niveau de danger qui varie entre 0 et 15.
