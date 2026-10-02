@@ -151,3 +151,46 @@ sudo grep '"name":"sshd"' /var/ossec/logs/alerts/alerts.json | tail -n 5
 # 6. retirer le debug 
 sudo sed -i '/^logcollector.debug/d' /var/ossec/etc/local_internal_options.conf
 sudo systemctl restart wazuh-manager
+
+
+filebeat : 
+
+sudo apt-get install elasticsearch -y
+sudo nano /etc/elasticsearch/elasticsearch.yml
+# Autoriser les connexions locales
+network.host: 127.0.0.1
+http.port: 9200
+
+# Spécifier que c'est un serveur de développement (1 seul noeud)
+discovery.type: single-node
+
+# Désactiver la sécurité pour le laboratoire (évite les blocages de certificats SSL avec Filebeat/Kibana)
+xpack.security.enabled: false
+
+sudo systemctl daemon-reload
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+sudo curl -s https://packages.wazuh.com/4.x/filebeat/wazuh-filebeat-0.3.tar.gz | sudo tar -xvz -C /usr/share/filebeat/module
+
+sudo nano /etc/filebeat/filebeat.ymlfilebeat.inputs:
+  - type: filestream
+    id: wazuh-alerts-json
+    enabled: true
+    paths:
+      - /var/ossec/logs/alerts/alerts.json
+    parsers:
+      - ndjson:
+          keys_under_root: true
+          overwrite_keys: true
+          add_error_key: true
+
+output.elasticsearch:
+  hosts: ["https://localhost:9200"]
+  username: "elastic"
+  password: "VOTRE_MOT_DE_PASSE"
+  ssl.verification_mode: "none"
+  
+sudo filebeat test config #doit répondre OK
+sudo systemctl daemon-reload
+sudo systemctl restart filebeat
+curl -k -u elastic -X GET "https://localhost:9200/_cat/indices?v&s=index" #ne doit pas rien afficher
