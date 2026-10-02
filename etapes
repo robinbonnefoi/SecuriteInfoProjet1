@@ -128,18 +128,26 @@ sudo systemctl status wazuh-agent
 
 # verifier que cela fonctionne
 
-#activer le debug de wazuh
+# 0. si ssh n'est pas installé
+sudo apt install -y openssh-server
+sudo systemctl enable --now ssh
+
+# 1. activer le debug du manager
 echo "logcollector.debug=2" | sudo tee -a /var/ossec/etc/local_internal_options.conf
 sudo systemctl restart wazuh-manager
 
-# provoquer une erreur ssh
+# 2. provoquer une erreur ssh
 ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
 
-# verifier que syslog a ecrit la ligne
+# 3. vérifier que syslog-ng a écrit la ligne
 sudo grep utilisateur_bidon /var/log/auth.log | tail -n 5
 
-# verifier que wazuh agent l'a lu
-sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log
+# 4. vérifier que le manager a lu la ligne
+sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log | tail -n 5
 
-# verifier que wazuh manager l'a lu
-sudo tail -f /var/ossec/logs/alerts/alerts.json | grep -i utilisateur_bidon
+# 5. vérifier que le manager a généré une alerte
+sudo grep '"name":"sshd"' /var/ossec/logs/alerts/alerts.json | tail -n 5
+
+# 6. retirer le debug 
+sudo sed -i '/^logcollector.debug/d' /var/ossec/etc/local_internal_options.conf
+sudo systemctl restart wazuh-manager
