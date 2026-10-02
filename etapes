@@ -196,3 +196,16 @@ sudo filebeat test config #doit répondre OK
 sudo systemctl daemon-reload
 sudo systemctl restart filebeat
 curl -k -u elastic -X GET "https://localhost:9200/_cat/indices?v&s=index" #ne doit pas rien afficher
+
+
+curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
+sudo nano wazuh-template.json
+-> {
+  "index_patterns": ["wazuh-alerts-4.x-*"],
+  "data_stream": {},
+  "template": {
+    "settings": {
+      "index.refresh_interval": "5s"
+    }
+  }
+}
