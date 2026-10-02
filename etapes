@@ -29,6 +29,32 @@ wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearm
 echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
 sudo apt-get update && sudo apt-get install kibana   
 
+# Downgrade kibana to 8.19.22
+# 1. Check versions
+curl -k -u elastic:VOTRE_MOT_DE_PASSE https://localhost:9200 | grep number
+dpkg -l | grep -E 'kibana|elasticsearch'
+
+# 2. Stop Kibana and back up its config
+sudo systemctl stop kibana
+sudo cp -a /etc/kibana /etc/kibana.bak
+
+# 3. Switch the APT repo from 9.x to 8.x
+ls /etc/apt/sources.list.d/            # find the elastic-9.x file
+sudo rm /etc/apt/sources.list.d/elastic-9.x.list
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt update
+
+# 4. Install the exact matching version
+apt list -a kibana                      # confirm 8.19.22 is available
+sudo apt install kibana=8.19.22 --allow-downgrades
+
+# 5. Prevent an accidental upgrade to 9.x
+sudo apt-mark hold kibana
+
+# 6. Start it
+sudo systemctl daemon-reload
+sudo systemctl start kibana
+sudo journalctl -u kibana -f
 
 
 # https://syslog-ng.github.io/admin-guide/040_Quick-start_guide/003_Managing_and_checking_syslog-ng_OSE_service_on_Linux
