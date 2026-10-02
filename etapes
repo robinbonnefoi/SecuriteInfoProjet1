@@ -170,7 +170,8 @@ xpack.security.enabled: false
 sudo systemctl daemon-reload
 sudo systemctl enable elasticsearch
 sudo systemctl start elasticsearch
-sudo curl -s https://packages.wazuh.com/4.x/filebeat/wazuh-filebeat-0.3.tar.gz | sudo tar -xvz -C /usr/share/filebeat/module
+sudo apt-get install filebeat -y
+
 
 sudo nano /etc/filebeat/filebeat.ymlfilebeat.inputs:
   - type: filestream
