@@ -173,7 +173,8 @@ sudo systemctl start elasticsearch
 sudo apt-get install filebeat -y
 
 
-sudo nano /etc/filebeat/filebeat.ymlfilebeat.inputs:
+sudo nano /etc/filebeat/filebeat.yml
+filebeat.inputs:
   - type: filestream
     id: wazuh-alerts-json
     enabled: true
