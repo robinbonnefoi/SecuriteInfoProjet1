@@ -191,6 +191,9 @@ output.elasticsearch:
   username: "elastic"
   password: "VOTRE_MOT_DE_PASSE"
   ssl.verification_mode: "none"
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now filebeat
   
 sudo filebeat test config #doit répondre OK
 sudo systemctl daemon-reload
