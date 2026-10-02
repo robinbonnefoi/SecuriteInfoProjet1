@@ -214,7 +214,7 @@ discovery.type: single-node
 # --------------------------------------------------------------------------------
 
 # Enable security features
-xpack.security.enabled: false
+xpack.security.enabled: true
 
 xpack.security.enrollment.enabled: true
 
