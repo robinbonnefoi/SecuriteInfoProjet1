@@ -26,7 +26,6 @@ sudo systemctl start elasticsearch.service
 
 # reset elsatic search password
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
-fR9LUhV4oh8c-aADYM*K
 
 # kibana
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
