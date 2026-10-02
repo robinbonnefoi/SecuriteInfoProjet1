@@ -128,6 +128,10 @@ sudo systemctl status wazuh-agent
 
 # verifier que cela fonctionne
 
+#activer le debug de wazuh
+echo "logcollector.debug=2" | sudo tee -a /var/ossec/etc/local_internal_options.conf
+sudo systemctl restart wazuh-manager
+
 # provoquer une erreur ssh
 ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
 
