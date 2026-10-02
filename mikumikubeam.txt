@@ -9,6 +9,7 @@ source ~/.bashrc
 
 ##############################################################
 # Installer mikumikubeam
+git clone https://github.com/sammwyy/mikumikubeam.git
 cd /home/silver/mikumikubeam
 go mod tidy
 make
