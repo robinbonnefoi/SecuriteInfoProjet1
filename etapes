@@ -165,7 +165,7 @@ http.port: 9200
 discovery.type: single-node
 
 # Désactiver la sécurité pour le laboratoire (évite les blocages de certificats SSL avec Filebeat/Kibana)
-xpack.security.enabled: false
+xpack.security.enabled: true
 
 sudo systemctl daemon-reload
 sudo systemctl enable elasticsearch
