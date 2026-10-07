@@ -27,6 +27,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 
 ## Interface Kibana :
 <img width="1798" height="966" alt="image" src="https://github.com/user-attachments/assets/67f72ad2-62bf-4451-a753-2cc1c5feb3fd" />
+Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
 
 
 ## Scénarios de tests :
