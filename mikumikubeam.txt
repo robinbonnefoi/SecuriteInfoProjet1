@@ -15,5 +15,7 @@ go mod tidy
 make
 
 #############################################################
+# lancer
+./bin/mmb-server
 # Dans une fenetre
 http://localhost:3000
