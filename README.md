@@ -25,6 +25,10 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 ## Installations :
   {mettre le fichier d'installations ici}
 
+## Interface Kibana :
+<img width="1798" height="966" alt="image" src="https://github.com/user-attachments/assets/67f72ad2-62bf-4451-a753-2cc1c5feb3fd" />
+
+
 ## Scénarios de tests :
   {mettre les différents scénarios (5) et justifier les choix de scénarios}
 
