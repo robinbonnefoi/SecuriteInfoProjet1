@@ -28,16 +28,26 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 ### lancement de l'interface Kibana :
 
 sudo ss -ltnp | grep 5601
+
 LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22)) # Verification du fonctionnement
+
 curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
+
 sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
+
 sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
+
 Recuperation du mot de passe :
+
+
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe
 
 <img width="526" height="541" alt="image" src="https://github.com/user-attachments/assets/f6ef89fc-9a57-4652-a0a4-02fc8c125842" />
-nom d'utilisateur : elastic
-mot de passe : mot de passe récupérer par la commande précédente 
+
+Username : elastic
+
+Password : mot de passe récupérer par la commande précédente 
+
 
 menu de gauche -> Management -> Stack Management 
 Puis menu de gauche -> Kibana -> Data views
