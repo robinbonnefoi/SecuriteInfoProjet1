@@ -203,3 +203,34 @@ sudo nano wazuh-template.json
     }
   }
 }
+
+#Service de Mail
+
+sudo apt update && sudo apt install postfix -y
+sudo nano /etc/postfix/sasl_passwd
+->
+[smtp.gmail.com]:587 ACHANGER@gmail.com:motdepasse16car #attenton le port et "smtp.gmail.com" est a changer selon le service de mail utilisé
+sudo chmod 600 /etc/postfix/sasl_passwd
+sudo postmap /etc/postfix/sasl_passwd
+sudo nano /etc/postfix/main.cf
+-> 
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+sudo systemctl restart postfix
+sudo nano /var/ossec/etc/ossec.conf
+-> 
+  <global>
+    <email_notification>yes</email_notification>
+    <email_to>ADRESSE_MAIL_ENVOIE</email_to>
+    <smtp_server>localhost</smtp_server>
+    <email_from>ADRESSE_MAIL_RECOIS</email_from>
+  </global>
+sudo systemctl restart wazuhmanager
+
+
+
