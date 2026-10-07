@@ -27,34 +27,38 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 
 ### lancement de l'interface Kibana :
 
-sudo ss -ltnp | grep 5601
+	sudo ss -ltnp | grep 5601
 
-LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22)) # Verification du fonctionnement
+LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22)) # Ce que la commande doit retourner
 
-curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
-
-sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
-
-sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
+	curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
+	sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
+	sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
 
 Recuperation du mot de passe :
 
 
-sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe
+	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe
 
 <img width="526" height="541" alt="image" src="https://github.com/user-attachments/assets/f6ef89fc-9a57-4652-a0a4-02fc8c125842" />
 
-Username : elastic
+	Username : elastic
+	Password : mot de passe récupérer par la commande précédente 
 
-Password : mot de passe récupérer par la commande précédente 
+<img width="1799" height="960" alt="2026_10_07_0wj_Kleki" src="https://github.com/user-attachments/assets/6a9f5c4d-581b-4473-a0d7-6c5aafe32374" />
 
 
-menu de gauche -> Management -> Stack Management 
-Puis menu de gauche -> Kibana -> Data views
+Interface Kibana, pour créer une nouvelle source de données, il faut aller dans stack management puis dans Data views
+
+<img width="1799" height="960" alt="2026_10_07_0wm_Kleki" src="https://github.com/user-attachments/assets/bdd477ac-9b9d-457b-bab4-71a8e035c6f8" />
+
 Puis Create data view :
+
+<img width="1799" height="960" alt="image" src="https://github.com/user-attachments/assets/99b12802-ece0-41e9-aa60-e679d68fc0b6" />
+
 	Name : parametre de notre choix
 	Index pattern : le pattern d'index utilisé
-	puis save data view
+puis save data view
 	
 Analytics puis Discover pour voir les analyses
 On peut filtrer par niveau de dangerosité dans le QKL avec la formule rule.level >= 10
