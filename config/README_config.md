@@ -51,3 +51,5 @@ Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'applicatio
     sudo systemctl restart elasticsearch
     sudo systemctl restart kibana
     sudo systemctl restart postfix
+    sudo systemctl restart filebeat
+
