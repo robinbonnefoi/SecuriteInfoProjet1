@@ -171,10 +171,30 @@ avec le niveau de danger qui varie entre 0 et 15.
 Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
 
 ## Scénarios de tests :
-  {mettre les différents scénarios (5) et justifier les choix de scénarios}
+  {justifier les choix de scénarios}
+  DOS -> flood
+  Spearphishing
+  scan de port
+  Attaque par dictionnaire
+  http frauduleux
 
 ## Mise en place des scénarios de tests
 
+### Installation de MikuMikuBeam (DOS)
+Suivre les instructions de ce git (dépend de la machine utilisé) :
+	
+https://github.com/sammwyy/mikumikubeam.git
+
+### Installation de Hydra (Attaque par dictionnaire)
+
+	sudo apt install hydra
+#### petite liste
+	curl -L -o /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+
+#### Ou la grande liste
+	git clone https://github.com/danielmiessler/SecLists.git /tmp/SecLists
+	ls /tmp/SecLists/Passwords/Common-Credentials/
+	hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
 
 ## Résultats des tests : 
   {mettre les screens et résultats de chacun des tests}
