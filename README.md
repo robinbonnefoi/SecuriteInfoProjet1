@@ -49,7 +49,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 		
 ## Installations :
 
-### wazuh manager
+### Wazuh manager
 	sudo apt install -y wazuh-manager
 	curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
 	echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list 10.0.0.132="10.0.0.2" 
@@ -60,7 +60,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo systemctl status wazuh-manager
 	
 
-### suricata et syslog-ng
+### Suricata et Syslog-ng
 	sudo apt install suricata syslog-ng
 	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier (voir config)
 	sudo syslog-ng -s # vérifier s'il y a des erreur
@@ -73,17 +73,17 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 
 
 
-### elastic search
+### Elastic search
 	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
 	sudo apt update && sudo apt install elasticsearch
 	sudo systemctl enable --now elasticsearch   
 	sudo systemctl start elasticsearch.service
 
-### reset elsatic search password
-	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+### Reset elsatic search password
+	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe 
 
-### kibana
+### Kibana
 	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
 	sudo apt-get update && sudo apt-get install kibana   
@@ -93,7 +93,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	curl -k -u elastic:VOTRE_MOT_DE_PASSE https://localhost:9200 | grep number
 	dpkg -l | grep -E 'kibana|elasticsearch'
 
-##### 2. Stop Kibana and back up its config
+#### 2. Stop Kibana and back up its config
 	sudo systemctl stop kibana
 	sudo cp -a /etc/kibana /etc/kibana.bak
 
@@ -115,7 +115,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo systemctl start kibana
 	sudo journalctl -u kibana -f
 
-### filebeat : 
+### Filebeat : 
 
 	sudo apt-get install elasticsearch -y
 	sudo systemctl daemon-reload
@@ -152,10 +152,14 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
 	sudo systemctl restart wazuhmanager
 	
-### lancement de l'interface Kibana :
+### Lancement de l'interface Kibana :
 
 	sudo ss -ltnp | grep 5601
-LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22)) # Ce que la commande doit retourner
+	
+doit retourner :
+	
+	LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22))
+	
 	curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
 	sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
 	sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
@@ -163,7 +167,7 @@ LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThr
 Recuperation du mot de passe :
 
 
-	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe
+	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe si ca na pas déjà été fait avant
 
 <img width="526" height="541" alt="image" src="https://github.com/user-attachments/assets/f6ef89fc-9a57-4652-a0a4-02fc8c125842" />
 
@@ -194,15 +198,14 @@ avec le niveau de danger qui varie entre 0 et 15.
 Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
 
 ## Scénarios de tests :
-  {justifier les choix de scénarios}
-  * DOS -> flood
-  * Spearphishing grâce à l'application Gophish
-  * Scan de port
-  * Attaque par dictionnaire
-  * Http frauduleux
+Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
 
-Ces choix ont pour buts de tester des attaques vraiment différentes avec un fonctionnement qui est unique à chacune et permettre de fortifier notre machine
-
+* Déni de service (DoS) avec MikuMikuBeam : permet d'évaluer la capacité de notre infrastructure à détecter un volume anormal de requêtes et à identifier une éventuelle saturation des ressources.
+* Spearphishing avec Gophish : permet de simuler une campagne de hameçonnage ciblée afin d'évaluer les risques liés à l'ingénierie sociale et la capacité à détecter les courriels frauduleux.
+* Scan de ports : permet de vérifier si notre système détecte les tentatives de reconnaissance du réseau et l'identification des services exposés.
+* Attaque par dictionnaire : permet d'évaluer la détection des tentatives répétées d'authentification à l'aide d'une liste de mots de passe courants.
+* Trafic HTTP frauduleux : permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
+	
 ## Mise en place des scénarios de tests
 
 ### Installation de MikuMikuBeam (DOS)
