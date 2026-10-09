@@ -25,29 +25,29 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 ## Organisation du GitHub :
 
 ## Installations :
-### wazuh agent
-	sudo apt-get install gnupg apt-transport-https curl
-	curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
-	echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list 10.0.0.132="10.0.0.2" 
-	sudo nano /var/ossec/etc/ossec.conf
-	<client>
-  	<server>
-    	<address>192.168.1.100</address>
-  	</server>
-	</client>
-	sudo apt-get install wazuh-agent
-	sudo systemctl daemon-reload
-	sudo systemctl enable wazuh-agent
-	sudo systemctl start wazuh-agent
 
 ### wazuh manager
 	sudo apt install -y wazuh-manager
+	curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+	echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list 10.0.0.132="10.0.0.2" 
 	sudo systemctl daemon-reload
+	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
 	sudo systemctl enable --now wazuh-manager
+	sudo systemctl restart wazuh-manager
 	sudo systemctl status wazuh-manager
+	
 
-### suricata
+### suricata et syslog-ng
 	sudo apt install suricata syslog-ng
+	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier (voir config)
+	sudo syslog-ng -s # vérifier s'il y a des erreur
+	sudo systemctl restart syslog-ng
+	sudo ss -lunp | grep 514 # s'il entend le port 514
+>>>> UNCONN 0      0            0.0.0.0:514        0.0.0.0:*    users:(("syslog-ng",pid=19291,fd=11)) 
+	logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
+	sudo cat /var/log/network-test.log 
+>>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
+
 
 
 ### elastic search
@@ -92,93 +92,6 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo systemctl start kibana
 	sudo journalctl -u kibana -f
 
-
-#### https://syslog-ng.github.io/admin-guide/040_Quick-start_guide/003_Managing_and_checking_syslog-ng_OSE_service_on_Linux
-	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier
-source s_net {
-    udp(
-        ip(0.0.0.0)
-        port(514)
-    );
-}; # uncomment line après source s_src
-destination d_test {
-    file("/var/log/network-test.log");
-};
-
-log {
-    source(s_net);
-    destination(d_test);
-}; # ajouter après "Send the messages to an other host" pour tester la connection avec Elasticsearch
-	sudo syslog-ng -s # vérifier s'il y a des erreur
-	sudo systemctl restart syslog-ng
-	sudo ss -lunp | grep 514 # s'il entend le port 514
->>>> UNCONN 0      0            0.0.0.0:514        0.0.0.0:*    users:(("syslog-ng",pid=19291,fd=11)) 
-	logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
-	sudo cat /var/log/network-test.log 
->>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
-
-
-### configation entre syslog et wazuh agent
-
-### verifer les fichiers dans lesquels syslog ng écrits
-	sudo grep -rn "file(" /etc/syslog-ng/syslog-ng.conf /etc/syslog-ng/conf.d/
-
-### verifier que les fichiers existent et se remplissent
-	ls -l /var/log/syslog /var/log/auth.log
-	sudo tail -n 5 /var/log/auth.log
-	logger "test syslog-ng"
-	sudo tail -n 2 /var/log/syslog
-	sudo nano /var/ossec/etc/ossec.conf
----->
-  <localfile>
-    <log_format>syslog</log_format>
-    <location>/var/log/syslog</location>
-  </localfile>
-
-  <localfile>
-    <log_format>syslog</log_format>
-    <location>/var/log/auth.log</location>
-  </localfile>
-
-  <localfile>
-    <log_format>syslog</log_format>
-    <location>/var/log/remote/*/*.log</location>
-  </localfile>
-
-verifier la syntaxe 
-sudo /var/ossec/bin/wazuh-logcollector -t
-
-redemarrer wazuh
-	sudo systemctl restart wazuh-manager
-	sudo systemctl status wazuh-manager
-
-### verifier que cela fonctionne
-
-#### 0. si ssh n'est pas installé
-	sudo apt install -y openssh-server
-	sudo systemctl enable --now ssh
-
-#### 1. activer le debug du manager
-	echo "logcollector.debug=2" | sudo tee -a /var/ossec/etc/local_internal_options.conf
-	sudo systemctl restart wazuh-manager
-
-#### 2. provoquer une erreur ssh
-	ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
-
-#### 3. vérifier que syslog-ng a écrit la ligne
-	sudo grep -a utilisateur_bidon /var/log/auth.log | tail -n 5
-
-#### 4. vérifier que le manager a lu la ligne
-	sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log | tail -n 5
-
-#### 5. vérifier que le manager a généré une alerte
-	sudo grep -a '"name":"sshd"' /var/ossec/logs/alerts/alerts.json | tail -n 5
-
-#### 6. retirer le debug 
-	sudo sed -i '/^logcollector.debug/d' /var/ossec/etc/local_internal_options.conf
-	sudo systemctl restart wazuh-manager
-
-
 ### filebeat : 
 
 	sudo apt-get install elasticsearch -y
@@ -186,7 +99,7 @@ redemarrer wazuh
 	sudo systemctl enable elasticsearch
 	sudo systemctl start elasticsearch
 	sudo apt-get install filebeat -y
-	sudo nano /etc/filebeat/filebeat.yml
+	sudo nano /etc/filebeat/filebeat.yml # configurer le fichier (voir config)
 	
 filebeat.inputs:
   - type: filestream
