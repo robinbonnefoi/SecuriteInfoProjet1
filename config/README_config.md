@@ -6,6 +6,7 @@ Ici se trouve les différentes information sur les configs qui peuvent ou doiven
 ## ossec.conf
 Localisation : /var/ossec/etc/ossec.conf
 
+
     <ossec_config>
       <global>
         <jsonout_output>yes</jsonout_output>
@@ -31,11 +32,13 @@ Localisation : /var/ossec/etc/ossec.conf
 ## filebeat.yml
 Localisation : 
 
+
     username: "elastic"
     password: "fR9LUhV4oh8c-aADYM*K"                        -> mot de passe définis grâce a la commande sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
 
 ### sasl_passwd
 Localisation : /etc/postfix/sasl_passwd
+
 
     [smtp.gmail.com]:587 maild'envoie:motdepassedumail
 
@@ -54,20 +57,14 @@ Localisation : /etc/postfix/main.cf
 ## local_rules.xml
 Localisation : /var/ossec/etc/rules/local_rules.xml
 
-
 ## syslog-ng.conf
 Localisation : /etc/syslog-ng/syslog-ng.conf
-
 
 ## local.rules
 Localisation : /var/lib/suricata/rules/local.rules
 
-
 ## suricata.yaml
 Localisation : /etc/suricata/suricata.yaml
-
-
-
 
 # Commande de restart pour appliquer les modifications
 
