@@ -30,7 +30,7 @@ Localisation : /var/ossec/etc/ossec.conf
       </alerts>
 
 ## filebeat.yml
-Localisation : 
+Localisation : /etc/filebeat/filebeat.yml
 
 
     username: "elastic"
