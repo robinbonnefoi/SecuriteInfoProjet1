@@ -55,6 +55,10 @@ Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'applicatio
 ## main.cf
 Localisation : /etc/postfix/main.cf
 
+    relayhost = [smtp.gmail.com]:587
+
+à modifier selon le service de mail utilisé (comme dans le fichier sasl_passwd)
+
 ## local_rules.xml
 Localisation : /var/ossec/etc/rules/local_rules.xml
 
