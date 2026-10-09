@@ -108,15 +108,15 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo systemctl restart filebeat
 	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
 	sudo nano wazuh-template.json
-{
-  "index_patterns": ["wazuh-alerts-4.x-*"],
-  "data_stream": {},
-  "template": {
-    "settings": {
-      "index.refresh_interval": "5s"
-    }
-  }
-}
+	{
+	  "index_patterns": ["wazuh-alerts-4.x-*"],
+	  "data_stream": {},
+	  "template": {
+	    "settings": {
+	      "index.refresh_interval": "5s"
+	    }
+	  }
+	}
 
 ### Service de Mail
 
