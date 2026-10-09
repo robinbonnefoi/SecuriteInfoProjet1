@@ -91,8 +91,8 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo journalctl -u kibana -f
 
 
-# https://syslog-ng.github.io/admin-guide/040_Quick-start_guide/003_Managing_and_checking_syslog-ng_OSE_service_on_Linux
-nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier
+#### https://syslog-ng.github.io/admin-guide/040_Quick-start_guide/003_Managing_and_checking_syslog-ng_OSE_service_on_Linux
+	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier
 source s_net {
     udp(
         ip(0.0.0.0)
@@ -107,27 +107,26 @@ log {
     source(s_net);
     destination(d_test);
 }; # ajouter après "Send the messages to an other host" pour tester la connection avec Elasticsearch
-sudo syslog-ng -s # vérifier s'il y a des erreur
-sudo systemctl restart syslog-ng
-sudo ss -lunp | grep 514 # s'il entend le port 514
+	sudo syslog-ng -s # vérifier s'il y a des erreur
+	sudo systemctl restart syslog-ng
+	sudo ss -lunp | grep 514 # s'il entend le port 514
 >>>> UNCONN 0      0            0.0.0.0:514        0.0.0.0:*    users:(("syslog-ng",pid=19291,fd=11)) 
-logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
-sudo cat /var/log/network-test.log 
+	logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
+	sudo cat /var/log/network-test.log 
 >>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
 
 
-# configation entre syslog et wazuh agent
+### configation entre syslog et wazuh agent
 
-# verifer les fichiers dans lesquels syslog ng écrits
-sudo grep -rn "file(" /etc/syslog-ng/syslog-ng.conf /etc/syslog-ng/conf.d/
+### verifer les fichiers dans lesquels syslog ng écrits
+	sudo grep -rn "file(" /etc/syslog-ng/syslog-ng.conf /etc/syslog-ng/conf.d/
 
-# verifier que les fichiers existent et se remplissent
-ls -l /var/log/syslog /var/log/auth.log
-sudo tail -n 5 /var/log/auth.log
-logger "test syslog-ng"
-sudo tail -n 2 /var/log/syslog
-
-sudo nano /var/ossec/etc/ossec.conf
+### verifier que les fichiers existent et se remplissent
+	ls -l /var/log/syslog /var/log/auth.log
+	sudo tail -n 5 /var/log/auth.log
+	logger "test syslog-ng"
+	sudo tail -n 2 /var/log/syslog
+	sudo nano /var/ossec/etc/ossec.conf
 ---->
   <localfile>
     <log_format>syslog</log_format>
@@ -144,52 +143,49 @@ sudo nano /var/ossec/etc/ossec.conf
     <location>/var/log/remote/*/*.log</location>
   </localfile>
 
-#verifier la syntaxe 
+verifier la syntaxe 
 sudo /var/ossec/bin/wazuh-logcollector -t
 
-#redemarrer wazuh
-sudo systemctl restart wazuh-manager
-sudo systemctl status wazuh-manager
+redemarrer wazuh
+	sudo systemctl restart wazuh-manager
+	sudo systemctl status wazuh-manager
 
-# verifier que cela fonctionne
+### verifier que cela fonctionne
 
-# 0. si ssh n'est pas installé
-sudo apt install -y openssh-server
-sudo systemctl enable --now ssh
+#### 0. si ssh n'est pas installé
+	sudo apt install -y openssh-server
+	sudo systemctl enable --now ssh
 
-# 1. activer le debug du manager
-echo "logcollector.debug=2" | sudo tee -a /var/ossec/etc/local_internal_options.conf
-sudo systemctl restart wazuh-manager
+#### 1. activer le debug du manager
+	echo "logcollector.debug=2" | sudo tee -a /var/ossec/etc/local_internal_options.conf
+	sudo systemctl restart wazuh-manager
 
-# 2. provoquer une erreur ssh
-ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
+#### 2. provoquer une erreur ssh
+	ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no utilisateur_bidon@localhost
 
-# 3. vérifier que syslog-ng a écrit la ligne
-sudo grep -a utilisateur_bidon /var/log/auth.log | tail -n 5
+#### 3. vérifier que syslog-ng a écrit la ligne
+	sudo grep -a utilisateur_bidon /var/log/auth.log | tail -n 5
 
-# 4. vérifier que le manager a lu la ligne
-sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log | tail -n 5
+#### 4. vérifier que le manager a lu la ligne
+	sudo grep -a utilisateur_bidon /var/ossec/logs/ossec.log | tail -n 5
 
-# 5. vérifier que le manager a généré une alerte
-sudo grep -a '"name":"sshd"' /var/ossec/logs/alerts/alerts.json | tail -n 5
+#### 5. vérifier que le manager a généré une alerte
+	sudo grep -a '"name":"sshd"' /var/ossec/logs/alerts/alerts.json | tail -n 5
 
-# 6. retirer le debug 
-sudo sed -i '/^logcollector.debug/d' /var/ossec/etc/local_internal_options.conf
-sudo systemctl restart wazuh-manager
-
-
-filebeat : 
-
-sudo apt-get install elasticsearch -y
+#### 6. retirer le debug 
+	sudo sed -i '/^logcollector.debug/d' /var/ossec/etc/local_internal_options.conf
+	sudo systemctl restart wazuh-manager
 
 
-sudo systemctl daemon-reload
-sudo systemctl enable elasticsearch
-sudo systemctl start elasticsearch
-sudo apt-get install filebeat -y
+### filebeat : 
 
-
-sudo nano /etc/filebeat/filebeat.yml
+	sudo apt-get install elasticsearch -y
+	sudo systemctl daemon-reload
+	sudo systemctl enable elasticsearch
+	sudo systemctl start elasticsearch
+	sudo apt-get install filebeat -y
+	sudo nano /etc/filebeat/filebeat.yml
+	
 filebeat.inputs:
   - type: filestream
     id: wazuh-alerts-json
@@ -208,18 +204,15 @@ output.elasticsearch:
   password: "VOTRE_MOT_DE_PASSE"
   ssl.verification_mode: "none"
 
-sudo systemctl daemon-reload
-sudo systemctl enable --now filebeat
-  
-sudo filebeat test config #doit répondre OK
-sudo systemctl daemon-reload
-sudo systemctl restart filebeat
-curl -k -u elastic -X GET "https://localhost:9200/_cat/indices?v&s=index" #ne doit pas rien afficher
-
-
-curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
-sudo nano wazuh-template.json
--> {
+	sudo systemctl daemon-reload
+	sudo systemctl enable --now filebeat
+	sudo filebeat test config #doit répondre OK
+	sudo systemctl daemon-reload
+	sudo systemctl restart filebeat
+	curl -k -u elastic -X GET "https://localhost:9200/_cat/indices?v&s=index" #ne doit pas rien afficher
+	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
+	sudo nano wazuh-template.json
+{
   "index_patterns": ["wazuh-alerts-4.x-*"],
   "data_stream": {},
   "template": {
@@ -229,16 +222,16 @@ sudo nano wazuh-template.json
   }
 }
 
-#Service de Mail
+### Service de Mail
 
-sudo apt update && sudo apt install postfix -y
-sudo nano /etc/postfix/sasl_passwd
-->
+	sudo apt update && sudo apt install postfix -y
+	sudo nano /etc/postfix/sasl_passwd
+
 [smtp.gmail.com]:587 ACHANGER@gmail.com:motdepasse16car #attenton le port et "smtp.gmail.com" est a changer selon le service de mail utilisé
-sudo chmod 600 /etc/postfix/sasl_passwd
-sudo postmap /etc/postfix/sasl_passwd
-sudo nano /etc/postfix/main.cf
--> 
+	sudo chmod 600 /etc/postfix/sasl_passwd
+	sudo postmap /etc/postfix/sasl_passwd
+	sudo nano /etc/postfix/main.cf
+
 relayhost = [smtp.gmail.com]:587
 smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
@@ -246,8 +239,8 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 
-sudo systemctl restart postfix
-sudo nano /var/ossec/etc/ossec.conf
+	sudo systemctl restart postfix
+	sudo nano /var/ossec/etc/ossec.conf
 -> 
   <global>
     <email_notification>yes</email_notification>
@@ -255,13 +248,11 @@ sudo nano /var/ossec/etc/ossec.conf
     <smtp_server>localhost</smtp_server>
     <email_from>ADRESSE_MAIL_RECOIS</email_from>
   </global>
-sudo systemctl restart wazuhmanager
+	sudo systemctl restart wazuhmanager
 ### lancement de l'interface Kibana :
 
 	sudo ss -ltnp | grep 5601
-
 LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22)) # Ce que la commande doit retourner
-
 	curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
 	sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
 	sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
