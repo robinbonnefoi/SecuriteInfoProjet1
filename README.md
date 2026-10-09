@@ -13,7 +13,9 @@
 * syslog-ng
 * Elasticsearch
 * Kibana
-* (Suricata)
+* Filebeat
+* Postfix
+* Suricata
 
 ## Présentation de l'architecture :
 Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur transport, Wazuh pour l'IDS/IPS, Elasticsearch pour la gestion des logs et Kibana pour leur visualisation. (suricata)
