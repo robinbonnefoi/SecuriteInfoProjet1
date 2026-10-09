@@ -22,8 +22,31 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 
 ## Schéma d'architecture :
 
+
+
 ## Organisation du GitHub :
 
+	SecuriteInfoProjet1/
+	├── README.md
+	└── config/
+		└──README_config.md
+	    ├── elasticsearch/
+	    │   └── elasticsearch.yml
+	    ├── filebeat/
+	    │   └── filebeat.yml
+	    ├── postfix/
+	 	│   ├── main.cf
+	    │   └── sasl_passwd
+	    ├── suricata/
+	 	│   ├── local.rules
+	    │   └── suricata.yaml
+	    ├── syslog_ng/
+	    │   └── syslog-ng.conf
+	    └── wazuh/
+	 	    ├── local_rules.xml
+	        └── ossec.conf
+
+		
 ## Installations :
 
 ### wazuh manager
