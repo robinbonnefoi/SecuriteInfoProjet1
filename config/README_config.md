@@ -4,7 +4,8 @@ Ici se trouve les différentes information sur les configs qui peuvent ou doiven
 
 
 ## ossec.conf
-  
+Localisation : /var/ossec/etc/ossec.conf
+
     <ossec_config>
       <global>
         <jsonout_output>yes</jsonout_output>
@@ -28,11 +29,13 @@ Ici se trouve les différentes information sur les configs qui peuvent ou doiven
       </alerts>
 
 ## filebeat.yml
+Localisation : 
 
     username: "elastic"
     password: "fR9LUhV4oh8c-aADYM*K"                        -> mot de passe définis grâce a la commande sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
 
 ### sasl_passwd
+Localisation : /etc/postfix/sasl_passwd
 
     [smtp.gmail.com]:587 maild'envoie:motdepassedumail
 
@@ -44,6 +47,10 @@ port et serveur à modifier selon le service de mail utilisé
     Yahoo Mail	smtp.mail.yahoo.com	587	
     
 Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'application qui est différent selon le service de mail utilisé
+
+### main.cf
+Localisation : /etc/postfix/main.cf
+
 
 # Commande de restart pour appliquer les modifications
   
