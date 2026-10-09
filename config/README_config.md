@@ -47,6 +47,7 @@ Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'applicatio
 
 # Commande de restart pour appliquer les modifications
   
-  sudo systemctl restart wazuh-manager
-  sudo systemctl restart elasticsearch
-  sudo systemctl restart elasticsearch
+    sudo systemctl restart wazuh-manager
+    sudo systemctl restart elasticsearch
+    sudo systemctl restart kibana
+    sudo systemctl restart postfix
