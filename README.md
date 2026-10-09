@@ -216,6 +216,8 @@ https://github.com/sammwyy/mikumikubeam.git
 
 ### Installation de Hydra (Attaque par dictionnaire)
 
+	sudo apt install -y openssh-server
+	sudo systemctl enable --now ssh
 	sudo apt install hydra
 #### petite liste
 	curl -L -o /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
