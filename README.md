@@ -100,31 +100,12 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo systemctl start elasticsearch
 	sudo apt-get install filebeat -y
 	sudo nano /etc/filebeat/filebeat.yml # configurer le fichier (voir config)
-	
-filebeat.inputs:
-  - type: filestream
-    id: wazuh-alerts-json
-    enabled: true
-    paths:
-      - /var/ossec/logs/alerts/alerts.json
-    parsers:
-      - ndjson:
-          keys_under_root: true
-          overwrite_keys: true
-          add_error_key: true
-
-output.elasticsearch:
-  hosts: ["https://localhost:9200"]
-  username: "elastic"
-  password: "VOTRE_MOT_DE_PASSE"
-  ssl.verification_mode: "none"
-
 	sudo systemctl daemon-reload
 	sudo systemctl enable --now filebeat
+	sudo systemctl restart filebeat
 	sudo filebeat test config #doit répondre OK
 	sudo systemctl daemon-reload
 	sudo systemctl restart filebeat
-	curl -k -u elastic -X GET "https://localhost:9200/_cat/indices?v&s=index" #ne doit pas rien afficher
 	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
 	sudo nano wazuh-template.json
 {
@@ -140,12 +121,10 @@ output.elasticsearch:
 ### Service de Mail
 
 	sudo apt update && sudo apt install postfix -y
-	sudo nano /etc/postfix/sasl_passwd
-
-[smtp.gmail.com]:587 ACHANGER@gmail.com:motdepasse16car #attenton le port et "smtp.gmail.com" est a changer selon le service de mail utilisé
+	sudo nano /etc/postfix/sasl_passwd # configurer le fichier (voir config)
 	sudo chmod 600 /etc/postfix/sasl_passwd
 	sudo postmap /etc/postfix/sasl_passwd
-	sudo nano /etc/postfix/main.cf
+	sudo nano /etc/postfix/main.cf # configurer le fichier (voir config)
 
 relayhost = [smtp.gmail.com]:587
 smtp_use_tls = yes
