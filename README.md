@@ -186,6 +186,10 @@ Ces choix ont pour buts de tester des attaques vraiment différentes avec un fon
 Suivre les instructions de ce git (dépend de la machine utilisé) :
 	
 https://github.com/sammwyy/mikumikubeam.git
+### Utilisation de MikuMikuBeam
+<img width="1165" height="686" alt="Diagramme sans nom drawio" src="https://github.com/user-attachments/assets/083bd87e-957a-464d-b275-ee07605bafbf" />
+
+
 
 ### Installation de Hydra (Attaque par dictionnaire)
 
