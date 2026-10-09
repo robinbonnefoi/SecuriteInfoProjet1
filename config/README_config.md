@@ -26,15 +26,16 @@ Localisation : /var/ossec/etc/ossec.conf
 
       <alerts>
         <log_alert_level>3</log_alert_level>
-        <email_alert_level>9</email_alert_level>              -> niveau d'alerte requis pour l'envoi d'un mail
+        <email_alert_level>9</email_alert_level>  -> niveau d'alerte requis pour l'envoi d'un mail
       </alerts>
 
 ## filebeat.yml
 Localisation : /etc/filebeat/filebeat.yml
 
-
-    username: "elastic"
-    password: "fR9LUhV4oh8c-aADYM*K"                        -> mot de passe définis grâce a la commande sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+    output.elasticsearch:
+        ...
+        username: "elastic"
+        password: "fR9LUhV4oh8c-aADYM*K"  -> mot de passe définis grâce a la commande sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
 
 ### sasl_passwd
 Localisation : /etc/postfix/sasl_passwd
