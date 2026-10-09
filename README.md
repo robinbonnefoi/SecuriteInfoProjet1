@@ -173,7 +173,7 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 ## Scénarios de tests :
   {justifier les choix de scénarios}
   DOS -> flood
-  Spearphishing
+  Spearphishing grâce à l'application Gophish
   scan de port
   Attaque par dictionnaire
   http frauduleux
@@ -196,7 +196,7 @@ https://github.com/sammwyy/mikumikubeam.git
 	ls /tmp/SecLists/Passwords/Common-Credentials/
 	hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
 
-### Installation de Gophish
+### Installation de Gophish (Spearphishing)
 	git clone https://github.com/gophish/gophish.git 
 	cd gophish
 	go build
