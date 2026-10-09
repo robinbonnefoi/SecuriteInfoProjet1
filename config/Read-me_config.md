@@ -1,6 +1,6 @@
 # Information
 
-Ici se trouve les différentes information qui peuvent ou doivent être changer pour assurer le bon fonctionnement du serveur
+Ici se trouve les différentes information sur les configs qui peuvent ou doivent être changer pour assurer le bon fonctionnement du serveur
 
 
 ## ossec.conf
@@ -31,3 +31,21 @@ Ici se trouve les différentes information qui peuvent ou doivent être changer 
 
     username: "elastic"
     password: "fR9LUhV4oh8c-aADYM*K"                        -> mot de passe définis grâce a la commande sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+
+### sasl_passwd
+
+    [smtp.gmail.com]:587 maild'envoie:motdepassedumail
+
+port et serveur à modifier selon le service de mail utilisé
+
+    Gmail	smtp.gmail.com	587	
+    Outlook.com smtp-mail.outlook.com	587	
+    Microsoft 365 smtp.office365.com	587	
+    Yahoo Mail	smtp.mail.yahoo.com	587	
+
+
+# Commande de restart pour appliquer les modifications
+  
+  sudo systemctl restart wazuh-manager
+  sudo systemctl restart elasticsearch
+  sudo systemctl restart elasticsearch
