@@ -232,5 +232,18 @@ sudo nano /var/ossec/etc/ossec.conf
   </global>
 sudo systemctl restart wazuhmanager
 
+#config surricata
+sudo nano /etc/suricata/suricata.yaml
+sudo nano /var/lib/suricata/rules/local.rules
 
+sudo suricata -T -c /etc/suricata/suricata.yaml -v
+sudo suricatasc -c reload-rules
+sudo suricata-update
+sudo systemctl restart suricata
+sudo systemctl status suricata
+
+#wazuh fichier rules
+sudo nano /var/ossec/etc/rules/local_rules.xml
+
+sudo systemctl restart wazuh-manager
 
