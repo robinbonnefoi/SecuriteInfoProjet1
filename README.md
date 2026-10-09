@@ -202,6 +202,7 @@ https://github.com/sammwyy/mikumikubeam.git
 	go build
 	sudo ./gophish
 le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
+Connecter sur https://127.0.0.1:3333
 
 ## Résultats des tests : 
   {mettre les screens et résultats de chacun des tests}
