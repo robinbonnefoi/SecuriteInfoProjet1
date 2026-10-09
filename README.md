@@ -249,22 +249,17 @@ Se connecter sur https://127.0.0.1:3333
 ## Analyse et conclusion :
 
 ### 1. Limites du projet
-* Absence de protection automatique complète :
-* Sécurisation de la configuration :
-* Couverture limitée des scénarios :
-*
-*
-*
-*
-*
-*
+* **Absence de protection automatique complète :**
+* **Sécurisation de la configuration :**
+* **Couverture limitée des scénarios :**
+* **Utilisation d'une machine pour la simulation d'un réseau :** En entreprise il y aura beaucoup + de flux et de demande que c'est le cas ici.
 ### 2. Améliorations possibles
-* Automatisation de la réponse aux incidents :
-* Renforcement de la sécurité :
-* Tests complémentaires :
+* **Automatisation de la réponse aux incidents :** mettre en place des systèmes de défense automatisée contre certains types d'attaques déjà identifié (exemple bloqué l'ardesse IP de l'attaquant lors d'un DOS
+* **Renforcement de la sécurité :**
+* **Tests complémentaires :** Ajouter plusieurs autres tests qui permettront de sécurisé d'avantage 
 *
 ### 3. Perspectives (veilles techno)
-*
+* **Automatisation des opérations de sécurité :** explorer des solutions de type SOAR pour automatiser certaines tâches de qualification et de réponse aux incidents.
 *
 *
 *
