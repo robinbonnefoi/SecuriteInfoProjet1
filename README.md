@@ -18,7 +18,8 @@
 * Suricata
 
 ## Présentation de l'architecture :
-Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur transport, Wazuh et Suricata pour la détection et génération d'alertes et logs, Elasticsearch pour la gestion de ceux-ci et Kibana pour leur visualisation. On a aussi utilisé Postfix afin de générer un mail si l'alerte atteint un certain niveau.
+
+L'utilisation de Wazuh et de Suricata permet de détecter différents comportements suspects, tandis que syslog-ng et Filebeat assurent la collecte et le transmission des journaux. Elasticsearch permet de stocker et d'indexer les événements, qui peuvent ensuite être visualisés et analysés dans Kibana. Enfin, Postfix permet d'envoyer des notifications par courriel lorsque certaines alertes atteignent un certain niveau de gravité défini.
 
 ## Schéma d'architecture :
 
@@ -200,11 +201,11 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 ## Scénarios de tests :
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
 
-* Déni de service (DoS) avec MikuMikuBeam : permet d'évaluer la capacité de notre infrastructure à détecter un volume anormal de requêtes et à identifier une éventuelle saturation des ressources.
-* Spearphishing avec Gophish : permet de simuler une campagne de hameçonnage ciblée afin d'évaluer les risques liés à l'ingénierie sociale et la capacité à détecter les courriels frauduleux.
-* Scan de ports : permet de vérifier si notre système détecte les tentatives de reconnaissance du réseau et l'identification des services exposés.
-* Attaque par dictionnaire : permet d'évaluer la détection des tentatives répétées d'authentification à l'aide d'une liste de mots de passe courants.
-* Trafic HTTP frauduleux : permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
+* **Déni de service (DoS) avec MikuMikuBeam :** permet d'évaluer la capacité de notre infrastructure à détecter un volume anormal de requêtes et à identifier une éventuelle saturation des ressources.
+* **Spearphishing avec Gophish :** permet de simuler une campagne de hameçonnage ciblée afin d'évaluer les risques liés à l'ingénierie sociale et la capacité à détecter les courriels frauduleux.
+* **Scan de ports :** permet de vérifier si notre système détecte les tentatives de reconnaissance du réseau et l'identification des services exposés.
+* **Attaque par dictionnaire :** permet d'évaluer la détection des tentatives répétées d'authentification à l'aide d'une liste de mots de passe courants.
+* **Trafic HTTP frauduleux :** permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
 	
 ## Mise en place des scénarios de tests
 
@@ -235,9 +236,35 @@ https://github.com/sammwyy/mikumikubeam.git
 	cd gophish
 	go build
 	sudo ./gophish
-le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
-Connecter sur https://127.0.0.1:3333
+le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" 
+
+	level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
+	
+Se connecter sur https://127.0.0.1:3333
 
 ## Résultats des tests : 
   {mettre les screens et résultats de chacun des tests}
+  explication des menaces représentées par les 5 scénarios
 
+## Analyse et conclusion :
+
+### 1. Limites du projet
+* Absence de protection automatique complète :
+* Sécurisation de la configuration :
+* Couverture limitée des scénarios :
+*
+*
+*
+*
+*
+*
+### 2. Améliorations possibles
+* Automatisation de la réponse aux incidents :
+* Renforcement de la sécurité :
+* Tests complémentaires :
+*
+### 3. Perspectives (veilles techno)
+*
+*
+*
+*
