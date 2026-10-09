@@ -12,6 +12,7 @@ Ici se trouve les différentes information qui peuvent ou doivent être changer 
     <logall>no</logall>
     <logall_json>no</logall_json>
     <email_notification>yes</email_notification>        -> accepte les notifications
+    <email_to>wazuh@example.wazuh.com</email_to>        -> E-mail de réception
     <smtp_server>localhost</smtp_server>
     <email_from>wazuh@example.wazuh.com</email_from>    -> E-mail d'envoie
     <email_maxperhour>12</email_maxperhour>             -> nombre max d'email par heure
