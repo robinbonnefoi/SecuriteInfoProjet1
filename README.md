@@ -172,11 +172,13 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 
 ## Scénarios de tests :
   {justifier les choix de scénarios}
-  DOS -> flood
-  Spearphishing grâce à l'application Gophish
-  scan de port
-  Attaque par dictionnaire
-  http frauduleux
+  * DOS -> flood
+  * Spearphishing grâce à l'application Gophish
+  * Scan de port
+  * Attaque par dictionnaire
+  * Http frauduleux
+
+Ces choix ont pour buts de tester des attaques vraiment différentes avec un fonctionnement qui est unique à chacune et permettre de fortifier notre machine
 
 ## Mise en place des scénarios de tests
 
