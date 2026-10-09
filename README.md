@@ -196,6 +196,13 @@ https://github.com/sammwyy/mikumikubeam.git
 	ls /tmp/SecLists/Passwords/Common-Credentials/
 	hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
 
+### Installation de Gophish
+	git clone https://github.com/gophish/gophish.git 
+	cd gophish
+	go build
+	sudo ./gophish
+le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
+
 ## Résultats des tests : 
   {mettre les screens et résultats de chacun des tests}
 
