@@ -1,0 +1,1 @@
+alert tcp any any -> $HOME_NET any (msg:"Possible SYN Flood Detected"; flags:S; threshold:type both, track by_dst, count 100, seconds 5; classtype:attempted-dos; priority:1; sid:1000001; rev:2;)
