@@ -51,12 +51,32 @@ Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'applicatio
 ## main.cf
 Localisation : /etc/postfix/main.cf
 
+## local_rules.xml
+Localisation : /var/ossec/etc/rules/local_rules.xml
+
+
+## syslog-ng.conf
+Localisation : /etc/syslog-ng/syslog-ng.conf
+
+
+## local.rules
+Localisation : /var/lib/suricata/rules/local.rules
+
+
+## suricata.yaml
+Localisation : /etc/suricata/suricata.yaml
+
+
+
 
 # Commande de restart pour appliquer les modifications
-  
+
+    sudo systemctl daemon-reload
     sudo systemctl restart wazuh-manager
     sudo systemctl restart elasticsearch
     sudo systemctl restart kibana
     sudo systemctl restart postfix
     sudo systemctl restart filebeat
+    sudo systemctl restart suricata
+    sudo systemctl restart syslog_ng
 
