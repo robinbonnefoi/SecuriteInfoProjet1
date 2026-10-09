@@ -202,7 +202,7 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
 
 * **Déni de service (DoS) avec MikuMikuBeam :** permet d'évaluer la capacité de notre infrastructure à détecter un volume anormal de requêtes et à identifier une éventuelle saturation des ressources.
-* **Spearphishing avec Gophish :** permet de simuler une campagne de hameçonnage ciblée afin d'évaluer les risques liés à l'ingénierie sociale et la capacité à détecter les courriels frauduleux.
+* **Spearphishing avec Gophish :** permet de simuler une campagne de hameçonnage ciblée afin d'évaluer la capacité à détecter les courriels frauduleux.
 * **Scan de ports :** permet de vérifier si notre système détecte les tentatives de reconnaissance du réseau et l'identification des services exposés.
 * **Attaque par dictionnaire :** permet d'évaluer la détection des tentatives répétées d'authentification à l'aide d'une liste de mots de passe courants.
 * **Trafic HTTP frauduleux :** permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
