@@ -19,6 +19,13 @@
 </group>
 
 <group name="suricata,">
+  <rule id="100011" level="12">
+    <if_sid>86601</if_sid>
+    <field name="alert.signature_id">^1000002$</field>
+    <description>Suricata: High severity alert - $(alert.signature)</description>
+    <group>recon,</group>
+  </rule>
+
   <rule id="100010" level="12">
     <if_sid>86601</if_sid>
     <field name="alert.severity">^1$</field>
