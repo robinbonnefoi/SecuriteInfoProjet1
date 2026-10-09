@@ -3,3 +3,4 @@ cd gophish
 go build
 sudo ./gophish
 le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
+https://127.0.0.1:3333
