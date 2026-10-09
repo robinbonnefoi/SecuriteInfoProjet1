@@ -42,7 +42,8 @@ port et serveur à modifier selon le service de mail utilisé
     Outlook.com smtp-mail.outlook.com	587	
     Microsoft 365 smtp.office365.com	587	
     Yahoo Mail	smtp.mail.yahoo.com	587	
-
+    
+Pour avoir le mot de passe du mail, il faut obtenir un mot de passe d'application qui est différent selon le service de mail utilisé
 
 # Commande de restart pour appliquer les modifications
   
