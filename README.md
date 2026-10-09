@@ -65,7 +65,7 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
 	sudo apt-get update && sudo apt-get install kibana   
 
-#### Downgrade kibana to 8.19.22
+###  Downgrade kibana to 8.19.22
 #### 1. Check versions
 	curl -k -u elastic:VOTRE_MOT_DE_PASSE https://localhost:9200 | grep number
 	dpkg -l | grep -E 'kibana|elasticsearch'
@@ -125,24 +125,10 @@ Pour ce projet, nous avons utilisé syslog-ng pour s'occuper des logs et de leur
 	sudo chmod 600 /etc/postfix/sasl_passwd
 	sudo postmap /etc/postfix/sasl_passwd
 	sudo nano /etc/postfix/main.cf # configurer le fichier (voir config)
-
-relayhost = [smtp.gmail.com]:587
-smtp_use_tls = yes
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-smtp_sasl_security_options = noanonymous
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-
 	sudo systemctl restart postfix
-	sudo nano /var/ossec/etc/ossec.conf
--> 
-  <global>
-    <email_notification>yes</email_notification>
-    <email_to>ADRESSE_MAIL_ENVOIE</email_to>
-    <smtp_server>localhost</smtp_server>
-    <email_from>ADRESSE_MAIL_RECOIS</email_from>
-  </global>
+	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
 	sudo systemctl restart wazuhmanager
+	
 ### lancement de l'interface Kibana :
 
 	sudo ss -ltnp | grep 5601
