@@ -11,7 +11,7 @@ sudo nano /var/ossec/etc/ossec.conf
 </localfile>
 
 sudo systemctl restart wazuh-manager
-hotname -I # chercher l address ip (dans notre cas 10.0.2.15)
+hostname -I # chercher l address ip (dans notre cas 10.0.2.15)
 
 # Machine locale
 curl -i "http://10.0.2.15/?id=SELECT+*+FROM+users"
