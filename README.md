@@ -290,6 +290,8 @@ Se connecter sur https://127.0.0.1:3333
 
 ### Trafic HTTP frauduleux :
 
+<img width="1615" height="795" alt="image" src="https://github.com/user-attachments/assets/75e553b3-5977-4852-be78-2e0b6ede9586" />
+
 * *Vol de données :* des requêtes malveillantes peuvent chercher à récupérer des informations confidentielles.
 * *Exploitation de vulnérabilités :* certaines requêtes peuvent viser des failles dans l'application Web.
 * *Contournement des mécanismes de sécurité :* des requêtes spécialement conçues peuvent chercher à contourner les contrôles d'accès.
