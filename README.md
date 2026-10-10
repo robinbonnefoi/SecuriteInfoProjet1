@@ -202,11 +202,11 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
 
 * **Déni de service (DoS) avec MikuMikuBeam :** Attaque visant à rendre un service informatique indisponible pour ses utilisateurs légitimes en envoyant un grand nombre de requêtes ou provoquer une surcharge qui épuise les ressources du système.
-* **Spearphishing avec Gophish :** permet de simuler une campagne de hameçonnage ciblée afin d'évaluer la capacité à détecter les courriels frauduleux.
+* **Spearphishing avec Gophish :** Attaque d'hameçonnage ciblée et personnalisée. il vise une personne ou un groupe précis en s'appuyant sur des informations concernant les victimes.
 * **Scan de ports :** Scan de ports pour examiner les ports réseau d'un ordinateur ou d'un serveur afin de déterminer lesquels sont ouverts et quels services y sont accessibles.
-* **Injections SQL :** 
+* **Injections SQL :** attaque qui consiste à manipuler les requêtes SQL exécutées par une application afin d'interagir avec sa base de données d'une manière qui n'était pas prévue.
 * **Attaque par dictionnaire :** Utilisation automatique d'une liste de mots de passe courants ou fréquemment utilisés afin de trouver celui d'un utilisateur et d'accéder à son compte.
-* **Trafic HTTP frauduleux :** permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
+* **Trafic HTTP frauduleux :** Envoies de requêtes Web malveillantes ou suspectes envoyées à un serveur ou à une application Web dans le but de manipuler son fonctionnement, d'exploiter une vulnérabilité ou d'accéder à des informations sans autorisation. 
 	
 ## Mise en place des scénarios de tests
 
@@ -268,6 +268,28 @@ Se connecter sur https://127.0.0.1:3333
 * *Indisponibilité des services :* les utilisateurs ne peuvent plus accéder au site ou à l'application.
 * *Pertes financières :* l'indisponibilité peut entraîner des coûts et nuire à la réputation.
 * *Saturation de l'infrastructure :* les serveurs, les réseaux ou les équipements de sécurité peuvent être surchargés.
+
+### Trafic HTTP frauduleux :
+
+* *Vol de données :* des requêtes malveillantes peuvent chercher à récupérer des informations confidentielles.
+* *Exploitation de vulnérabilités :* certaines requêtes peuvent viser des failles dans l'application Web.
+* *Contournement des mécanismes de sécurité :* des requêtes spécialement conçues peuvent chercher à contourner les contrôles d'accès.
+
+### Spearphishing : 
+
+* *Vol d'identifiants :*  la victime peut transmettre son nom d'utilisateur et son mot de passe à un attaquant.
+* *Usurpation d'identité :* les identifiants volés peuvent servir à se faire passer pour la victime.
+* *Compromission de comptes :* l'attaquant peut accéder aux courriels, aux fichiers ou aux applications autorisés pour le compte compromis.
+* *Propagation de l'attaque :* un compte compromis peut être utilisé pour envoyer de nouveaux messages frauduleux à des collègues ou à des supérieurs hiérarchiques.
+* *Vol de données confidentielles :* l'attaquant peut consulter ou récupérer les informations auxquelles le compte donne accès.
+
+### Injections SQL :
+
+
+* *Vol de données :* récupération de renseignements personnels, de mots de passe ou d'informations confidentielles.
+* *Modification des données :* altération des dossiers, des commandes ou des informations enregistrées.
+* *Suppression de données :* destruction de certaines tables ou informations, selon les privilèges disponibles.
+
 
 ## Analyse et conclusion :
 
