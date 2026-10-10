@@ -201,10 +201,11 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 ## Scénarios de tests :
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
 
-* **Déni de service (DoS) avec MikuMikuBeam :** permet d'évaluer la capacité de notre infrastructure à détecter un volume anormal de requêtes et à identifier une éventuelle saturation des ressources.
+* **Déni de service (DoS) avec MikuMikuBeam :** Attaque visant à rendre un service informatique indisponible pour ses utilisateurs légitimes en envoyant un grand nombre de requêtes ou provoquer une surcharge qui épuise les ressources du système.
 * **Spearphishing avec Gophish :** permet de simuler une campagne de hameçonnage ciblée afin d'évaluer la capacité à détecter les courriels frauduleux.
-* **Scan de ports :** permet de vérifier si notre système détecte les tentatives de reconnaissance du réseau et l'identification des services exposés.
-* **Attaque par dictionnaire :** permet d'évaluer la détection des tentatives répétées d'authentification à l'aide d'une liste de mots de passe courants.
+* **Scan de ports :** Scan de ports pour examiner les ports réseau d'un ordinateur ou d'un serveur afin de déterminer lesquels sont ouverts et quels services y sont accessibles.
+* **Injections SQL :** 
+* **Attaque par dictionnaire :** Utilisation automatique d'une liste de mots de passe courants ou fréquemment utilisés afin de trouver celui d'un utilisateur et d'accéder à son compte.
 * **Trafic HTTP frauduleux :** permet de tester la capacité de notre infrastructure à repérer les requêtes HTTP suspectes, les comportements anormaux et les tentatives d'exploitation potentielles. 
 	
 ## Mise en place des scénarios de tests
@@ -245,6 +246,28 @@ Se connecter sur https://127.0.0.1:3333
 ## Résultats des tests : 
   {mettre les screens et résultats de chacun des tests}
   explication des menaces représentées par les 5 scénarios
+
+### Attaque par dictionnaire :
+  
+<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/fdc6bc76-0dbf-4edf-a658-6e3ddbb8525e" />
+
+* *Vol de données personnelles :* il peut consulter des informations confidentielles et accéder a son compte.
+* *Usurpation d'identité :* il peut se faire passer pour la victime (permettrait de faire de l'usurpation hiérarchique, de la fraude au président, etc)
+* *Utilisation sur d'autres comptes :* l'attaquant pourrait réutiliser ce même mot de passe sur d'autres applications.
+
+### Scan de ports :
+<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/204a84c3-a0e8-47a2-aa87-c96362c41e94" />
+
+* *Découverte des services exposés :* l'attaquant identifie les applications accessibles depuis le réseau.
+* *Repérage des vulnérabilités :* les services détectés peuvent être examinés pour rechercher des failles de sécurité dans le but d'être exploité
+
+### Déni de service (DoS) :
+
+<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/12e5fc80-e273-481a-af1f-6b0d643b6f4a" />
+
+* *Indisponibilité des services :* les utilisateurs ne peuvent plus accéder au site ou à l'application.
+* *Pertes financières :* l'indisponibilité peut entraîner des coûts et nuire à la réputation.
+* *Saturation de l'infrastructure :* les serveurs, les réseaux ou les équipements de sécurité peuvent être surchargés.
 
 ## Analyse et conclusion :
 
