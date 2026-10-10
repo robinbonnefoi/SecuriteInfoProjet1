@@ -8,7 +8,7 @@
   * BEN MAKHLOUF Ines
   
 
-## Outils utilisés : 
+## Outils utilisés dans notre système : 
 * Wazuh
 * syslog-ng
 * Elasticsearch
@@ -16,6 +16,12 @@
 * Filebeat
 * Postfix
 * Suricata
+
+## Outils utilisés pour nos tests en tant qu'attaquant:
+* Gophish
+* Ncrack
+* MikuMikuBeam
+  
 
 ## Présentation de l'architecture :
 
