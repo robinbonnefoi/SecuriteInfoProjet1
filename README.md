@@ -243,6 +243,21 @@ le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00"
 	
 Se connecter sur https://127.0.0.1:3333
 
+### Injections SQL
+	sudo apt update
+	sudo apt install apache2
+	sudo systemctl enable --now apache2
+	curl http://localhost # voir si le serveur marche
+	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
+	sudo systemctl restart wazuh-manager
+	hostname -I # chercher l address ip (dans notre cas 10.0.2.15)
+
+#### Machine locale
+	curl -i "http://10.0.2.15/?id=SELECT+*+FROM+users"
+
+#### Voir dand les log de Wazuh
+	sudo tail -n 20 /var/log/apache2/access.log
+
 ## Résultats des tests : 
 ### Attaque par dictionnaire :
   
