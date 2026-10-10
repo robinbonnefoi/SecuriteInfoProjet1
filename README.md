@@ -157,7 +157,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo nano /etc/postfix/main.cf # configurer le fichier (voir config)
 	sudo systemctl restart postfix
 	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
-	sudo systemctl restart wazuhmanager
+	sudo systemctl restart wazuh-manager
 	
 ### Lancement de l'interface Kibana :
 
