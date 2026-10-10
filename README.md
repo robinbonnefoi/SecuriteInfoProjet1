@@ -244,9 +244,6 @@ le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00"
 Se connecter sur https://127.0.0.1:3333
 
 ## Résultats des tests : 
-  {mettre les screens et résultats de chacun des tests}
-  explication des menaces représentées par les 5 scénarios
-
 ### Attaque par dictionnaire :
   
 <img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/fdc6bc76-0dbf-4edf-a658-6e3ddbb8525e" />
