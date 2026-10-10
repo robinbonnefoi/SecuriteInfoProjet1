@@ -29,7 +29,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 
 ## Schéma d'architecture :
 
-
+<img width="754" height="397" alt="Schéma_architecture drawio" src="https://github.com/user-attachments/assets/dacfbe40-95bc-488d-9ae2-4dba274c0621" />
 
 ## Organisation du GitHub :
 
