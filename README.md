@@ -304,6 +304,7 @@ Se connecter sur https://127.0.0.1:3333
 
 ### Injections SQL :
 
+<img width="1612" height="792" alt="image" src="https://github.com/user-attachments/assets/c29c1ede-dd2c-465f-bc58-56a37808b4cc" />
 
 * *Vol de données :* récupération de renseignements personnels, de mots de passe ou d'informations confidentielles.
 * *Modification des données :* altération des dossiers, des commandes ou des informations enregistrées.
