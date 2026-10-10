@@ -192,12 +192,12 @@ Puis Create data view :
 
 <img width="1799" height="960" alt="image" src="https://github.com/user-attachments/assets/99b12802-ece0-41e9-aa60-e679d68fc0b6" />
 
-	Name : parametre de notre choix
+	Name : paramètre de notre choix
 	Index pattern : le pattern d'index utilisé
 puis save data view
 	
 Analytics puis Discover pour voir les analyses
-On peut filtrer par niveau de dangerosité dans le QKL avec la formule rule.level >= 10
+On peut filtrer par niveau de dangerosité dans le KQL avec la formule rule.level >= 10
 avec le niveau de danger qui varie entre 0 et 15.
 
 ## Interface Kibana :
@@ -216,11 +216,12 @@ Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la cap
 	
 ## Mise en place des scénarios de tests
 
-### Installation de MikuMikuBeam (DOS)
+### Installation et utilisation de MikuMikuBeam (DOS)
 Suivre les instructions de ce git (dépend de la machine utilisé) :
 	
 https://github.com/sammwyy/mikumikubeam.git
-### Utilisation de MikuMikuBeam
+
+
 <img width="1165" height="686" alt="Diagramme sans nom drawio" src="https://github.com/user-attachments/assets/083bd87e-957a-464d-b275-ee07605bafbf" />
 
 
@@ -233,7 +234,7 @@ https://github.com/sammwyy/mikumikubeam.git
 #### petite liste
 	curl -L -o /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
 
-#### Ou la grande liste
+#### ou la grande liste
 	git clone https://github.com/danielmiessler/SecLists.git /tmp/SecLists
 	ls /tmp/SecLists/Passwords/Common-Credentials/
 	hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
@@ -261,7 +262,7 @@ Se connecter sur https://127.0.0.1:3333
 #### Machine locale
 	curl -i "http://10.0.2.15/?id=SELECT+*+FROM+users"
 
-#### Voir dand les log de Wazuh
+#### Voir dans les log de Wazuh
 	sudo tail -n 20 /var/log/apache2/access.log
 
 ## Résultats des tests : 
@@ -321,7 +322,7 @@ Se connecter sur https://127.0.0.1:3333
 * **Automatisation de la réponse aux incidents :** Mettre en place des mécanismes de défense automatisés contre certains types d'attaques déjà identifiées, par exemple en bloquant temporairement une adresse IP malveillante lors d'une attaque DoS, lorsque cela est pertinent.
 * **Renforcement de la sécurité :** Éviter de stocker les mots de passe en clair dans les fichiers de configuration et utiliser des solutions plus sécurisées, comme des variables d'environnement ou un gestionnaire de secrets.
 * **Scénarios complémentaires :** Ajouter plusieurs autres scénarios d'attaque afin d'améliorer la couverture des menaces.
-*
+
 ### 3. Perspectives (veilles techno)
 * **Automatisation des opérations de sécurité :** Explorer des solutions de type SOAR pour automatiser certaines tâches de réponse aux incidents.
 * **Détection basée sur l'intelligence artificielle :** Explorer des solutions capables d'analyser les comportements du réseau afin de détecter des anomalies ou des attaques qui ne correspondent pas aux règles de détection existantes.
