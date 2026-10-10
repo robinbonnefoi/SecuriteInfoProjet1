@@ -199,7 +199,7 @@ avec le niveau de danger qui varie entre 0 et 15.
 Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
 
 ## Scénarios de tests :
-Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance et de défense.
+Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance.
 
 * **Déni de service (DoS) avec MikuMikuBeam :** Attaque visant à rendre un service informatique indisponible pour ses utilisateurs légitimes en envoyant un grand nombre de requêtes ou provoquer une surcharge qui épuise les ressources du système.
 * **Spearphishing avec Gophish :** Attaque d'hameçonnage ciblée et personnalisée. il vise une personne ou un groupe précis en s'appuyant sur des informations concernant les victimes.
