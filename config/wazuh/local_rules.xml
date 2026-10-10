@@ -32,6 +32,14 @@
 </group>
 
 <group name="suricata,">
+  
+  <rule id="100013" level="14">
+    <if_sid>86601</if_sid>
+    <field name="alert.signature_id">^1000004$</field>
+    <description>Suricata: High severity alert - $(alert.signature)</description>
+    <group>web,attack,</group>
+  </rule>
+
   <rule id="100011" level="12">
     <if_sid>86601</if_sid>
     <field name="alert.signature_id">^1000002$</field>
@@ -41,7 +49,7 @@
 
   <rule id="100010" level="11">
     <if_sid>86601</if_sid>
-    <field name="alert.severity">^1$</field>
+    <field name="alert.signature_id">^1000001$</field>
     <description>Suricata: High severity alert - $(alert.signature)</description>
     <group>attempted_dos,</group>
   </rule>
