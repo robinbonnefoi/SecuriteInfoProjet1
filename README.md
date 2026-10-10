@@ -291,17 +291,16 @@ Se connecter sur https://127.0.0.1:3333
 ## Analyse et conclusion :
 
 ### 1. Limites du projet
-* **Absence de protection automatique complète :**
-* **Sécurisation de la configuration :**
-* **Couverture limitée des scénarios :**
-* **Utilisation d'une machine pour la simulation d'un réseau :** En entreprise il y aura beaucoup + de flux et de demande que c'est le cas ici.
+* **Absence de protection automatique complète :** On détecte certains types d'attaques, mais on n'y apporte pas nécessairement de réponse automatique.
+* **Sécurisation de la configuration :** Les mots de passe sont écrits directement dans les fichiers de configuration, ce qui n'est pas très sécuritaire.
+* **Couverture limitée des scénarios :** Le système est testé sur des attaques connues et définies à l'avance, ce qui limite sa capacité à détecter des attaques inconnues.
+* **Utilisation d'une machine pour la simulation d'un réseau :** En entreprise, il y aura beaucoup plus de trafic et de requêtes que dans notre environnement de simulation.
+  
 ### 2. Améliorations possibles
-* **Automatisation de la réponse aux incidents :** mettre en place des systèmes de défense automatisée contre certains types d'attaques déjà identifié (exemple bloqué l'ardesse IP de l'attaquant lors d'un DOS
-* **Renforcement de la sécurité :**
-* **Tests complémentaires :** Ajouter plusieurs autres tests qui permettront de sécurisé d'avantage 
+* **Automatisation de la réponse aux incidents :** Mettre en place des mécanismes de défense automatisés contre certains types d'attaques déjà identifiées, par exemple en bloquant temporairement une adresse IP malveillante lors d'une attaque DoS, lorsque cela est pertinent.
+* **Renforcement de la sécurité :** Éviter de stocker les mots de passe en clair dans les fichiers de configuration et utiliser des solutions plus sécurisées, comme des variables d'environnement ou un gestionnaire de secrets.
+* **Scénarios complémentaires :** Ajouter plusieurs autres scénarios d'attaque afin d'améliorer la couverture des menaces.
 *
 ### 3. Perspectives (veilles techno)
-* **Automatisation des opérations de sécurité :** explorer des solutions de type SOAR pour automatiser certaines tâches de qualification et de réponse aux incidents.
-*
-*
-*
+* **Automatisation des opérations de sécurité :** Explorer des solutions de type SOAR pour automatiser certaines tâches de réponse aux incidents.
+* **Détection basée sur l'intelligence artificielle :** Explorer des solutions capables d'analyser les comportements du réseau afin de détecter des anomalies ou des attaques qui ne correspondent pas aux règles de détection existantes.
