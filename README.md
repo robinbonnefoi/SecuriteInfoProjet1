@@ -190,17 +190,19 @@ Dans le menu Analytics -> Discover, on peut voir les différents horaires a laqu
 ## Scénarios de tests :
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance.
 
-* **Déni de service (DoS) avec MikuMikuBeam :** Attaque visant à rendre un service informatique indisponible pour ses utilisateurs légitimes en envoyant un grand nombre de requêtes ou provoquer une surcharge qui épuise les ressources du système.
-* **Spearphishing avec Gophish :** Attaque d'hameçonnage ciblée et personnalisée. il vise une personne ou un groupe précis en s'appuyant sur des informations concernant les victimes.
-* **Scan de ports :** Scan de ports pour examiner les ports réseau d'un ordinateur ou d'un serveur afin de déterminer lesquels sont ouverts et quels services y sont accessibles.
-* **Injections SQL :** attaque qui consiste à manipuler les requêtes SQL exécutées par une application afin d'interagir avec sa base de données d'une manière qui n'était pas prévue.
-* **Attaque par dictionnaire :** Utilisation automatique d'une liste de mots de passe courants ou fréquemment utilisés afin de trouver celui d'un utilisateur et d'accéder à son compte.
+* **DOS par HTTP flood :** Envoie massif de requête http à la VM avec l'outil Mikumikubeam.
+* **Scan de ports :** Scan les ports de la VM afin de déterminer les ports qui sont ouverts à l'aide de l'outil Nmap.
+* **Injections SQL :** Injection de requête SQL dans une requête http envoyé sur un service apache2 hébergé par la VM.
+* **Attaque par dictionnaire :** Brute force SSH utilisant un dictionnaire de mot de passe coomun à l'aide de l'outil Ncrack.
 * **Trafic HTTP frauduleux :** Envoies de requêtes Web malveillantes ou suspectes envoyées à un serveur ou à une application Web dans le but de manipuler son fonctionnement, d'exploiter une vulnérabilité ou d'accéder à des informations sans autorisation. 
 	
 ## Mise en place des scénarios de tests
 
-### Installation et utilisation de MikuMikuBeam (DOS)
-Suivre les instructions de ce git (dépend de la machine utilisé) :
+### DOS par HTTP flood :
+
+#### MikumikuBeam :
+
+Guide d'installation et d'utilisation :
 	
 https://github.com/sammwyy/mikumikubeam.git
 
@@ -209,46 +211,26 @@ https://github.com/sammwyy/mikumikubeam.git
 
 
 
-### Installation de Hydra (Attaque par dictionnaire)
+### Attaque par dictionnaire :
 
-	sudo apt install -y openssh-server
-	sudo systemctl enable --now ssh
-	sudo apt install hydra
-#### petite liste
-	curl -L -o /tmp/rockyou.txt.gz https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+#### NCrack
 
-#### ou la grande liste
-	git clone https://github.com/danielmiessler/SecLists.git /tmp/SecLists
-	ls /tmp/SecLists/Passwords/Common-Credentials/
-	hydra -l user@vbox -P /tmp/SecLists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://127.0.0.1:2200 -t 4
+Guide d'installation et d'utilisation :
 
-### Installation de Gophish (Spearphishing)
-	git clone https://github.com/gophish/gophish.git 
-	cd gophish
-	go build
-	sudo ./gophish
-le mot de passe est dans le log: time="2026-10-07T18:58:04-04:00" 
-
-	level=info msg="Please login with the username admin and the password 1ee58d66f89515d7"
+https://nmap.org/ncrack/
 	
-Se connecter sur https://127.0.0.1:3333
 
 ### Injections SQL
+
+#### Installation et mise en place de apache2 :
 	sudo apt update
 	sudo apt install apache2
 	sudo systemctl enable --now apache2
-	curl http://localhost # voir si le serveur marche
-	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
-	sudo systemctl restart wazuh-manager
-	hostname -I # chercher l address ip (dans notre cas 10.0.2.15)
 
-#### Machine locale
+#### Attaque :
 	curl -i "http://10.0.2.15/?id=SELECT+*+FROM+users"
 
-#### Voir dans les log de Wazuh
-	sudo tail -n 20 /var/log/apache2/access.log
 
-## Résultats des tests : 
 ### Attaque par dictionnaire :
   
 <img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/fdc6bc76-0dbf-4edf-a658-6e3ddbb8525e" />
