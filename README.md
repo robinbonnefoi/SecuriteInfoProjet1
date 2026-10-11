@@ -70,15 +70,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 ### Suricata et Syslog-ng
 	sudo apt install suricata syslog-ng
 	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier (voir config)
-	sudo syslog-ng -s # vérifier s'il y a des erreur
 	sudo systemctl restart syslog-ng
-	sudo ss -lunp | grep 514 # s'il entend le port 514
-	>>>> UNCONN 0      0            0.0.0.0:514        0.0.0.0:*    users:(("syslog-ng",pid=19291,fd=11)) 
-	logger --server 127.0.0.1 --port 514 --udp "TEST security log" # envoyer le message
-	sudo cat /var/log/network-test.log 
-	>>>>> Sep 28 14:28:59 127.0.0.1 1 2026-09-28T14:28:59.773934-04:00 debian silver - - [timeQuality tzKnown="1" isSynced="1" syncAccuracy="585000"] TEST security log
-
-
 
 ### Elastic search
 	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
@@ -138,15 +130,6 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo systemctl restart filebeat
 	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
 	sudo nano wazuh-template.json
-	{
-	  "index_patterns": ["wazuh-alerts-4.x-*"],
-	  "data_stream": {},
-	  "template": {
-	    "settings": {
-	      "index.refresh_interval": "5s"
-	    }
-	  }
-	}
 
 ### Service de Mail
 
