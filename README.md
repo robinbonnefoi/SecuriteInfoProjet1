@@ -195,6 +195,7 @@ Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la cap
 * **Injections SQL :** Injection de requête SQL dans une requête http envoyé sur un service apache2 hébergé par la VM.
 * **Attaque par dictionnaire :** Brute force SSH utilisant un dictionnaire de mot de passe coomun à l'aide de l'outil Ncrack.
 * **Trafic HTTP frauduleux :** Envoies de requêtes Web malveillantes ou suspectes envoyées à un serveur ou à une application Web dans le but de manipuler son fonctionnement, d'exploiter une vulnérabilité ou d'accéder à des informations sans autorisation. 
+
 	
 ## Mise en place des scénarios de tests
 
@@ -202,20 +203,27 @@ Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la cap
 
 #### MikumikuBeam :
 
-Guide d'installation et d'utilisation :
+Installation et d'utilisation :
 	
 https://github.com/sammwyy/mikumikubeam.git
 
-
 <img width="1165" height="686" alt="Diagramme sans nom drawio" src="https://github.com/user-attachments/assets/083bd87e-957a-464d-b275-ee07605bafbf" />
 
+
+### Scan de port :
+
+#### Nmap :
+
+Installation et d'utilisation :
+
+https://nmap.org/download.html
 
 
 ### Attaque par dictionnaire :
 
 #### NCrack
 
-Guide d'installation et d'utilisation :
+Installation et d'utilisation :
 
 https://nmap.org/ncrack/
 	
@@ -228,8 +236,18 @@ https://nmap.org/ncrack/
 	sudo systemctl enable --now apache2
 
 #### Attaque :
-	curl -i "http://10.0.2.15/?id=SELECT+*+FROM+users"
+	curl -i "http://192.168.56.10/?id=SELECT+*+FROM+users"
 
+
+### Requête Http frauduleuse :
+
+#### Attaque :
+	curl -i "http://192.168.56.10/?exploit=1"
+
+
+
+	
+## Menace de chaque attaque :
 
 ### Attaque par dictionnaire :
   
