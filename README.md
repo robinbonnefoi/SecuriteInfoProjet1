@@ -116,7 +116,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
 	sudo nano wazuh-template.json
 
-### Service de Mail
+### Postfix
 
 	sudo apt update && sudo apt install postfix -y
 	sudo nano /etc/postfix/sasl_passwd # configurer le fichier (voir config)
