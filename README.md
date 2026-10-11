@@ -79,15 +79,15 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo systemctl enable --now elasticsearch   
 	sudo systemctl start elasticsearch.service
 
-### Mot de passe elsaticsearch
+#### Mot de passe elsaticsearch
 	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe 
 
-### Kibana
+### Kibana :
 	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
 	sudo apt-get update && sudo apt-get install kibana   
 
-###  Downgrade kibana to 8.19.22
+#### Mettre Kibana en 8.19.22 :
 
 	sudo systemctl stop kibana
 	sudo rm /etc/apt/sources.list.d/elastic-9.x.list
@@ -116,7 +116,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	curl -o wazuh-template.json https://raw.githubusercontent.com/wazuh/wazuh/4.9/extensions/elasticsearch/8.x/wazuh-template.json
 	sudo nano wazuh-template.json
 
-### Postfix
+### Postfix :
 
 	sudo apt update && sudo apt install postfix -y
 	sudo nano /etc/postfix/sasl_passwd # configurer le fichier (voir config)
@@ -126,8 +126,10 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo systemctl restart postfix
 	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
 	sudo systemctl restart wazuh-manager
-	
-### Lancement de l'interface Kibana :
+
+
+
+## Lancement de Kibana :
 
 	sudo ss -ltnp | grep 5601
 	curl -I http://127.0.0.1:5601
