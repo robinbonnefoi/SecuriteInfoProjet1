@@ -72,14 +72,14 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier (voir config)
 	sudo systemctl restart syslog-ng
 
-### Elastic search
+### Elasticsearch
 	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
 	sudo apt update && sudo apt install elasticsearch
 	sudo systemctl enable --now elasticsearch   
 	sudo systemctl start elasticsearch.service
 
-### Reset elsatic search password
+### Mot de passe elsaticsearch
 	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe 
 
 ### Kibana
@@ -88,28 +88,13 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo apt-get update && sudo apt-get install kibana   
 
 ###  Downgrade kibana to 8.19.22
-#### 1. Check versions
-	curl -k -u elastic:VOTRE_MOT_DE_PASSE https://localhost:9200 | grep number
-	dpkg -l | grep -E 'kibana|elasticsearch'
 
-#### 2. Stop Kibana and back up its config
 	sudo systemctl stop kibana
-	sudo cp -a /etc/kibana /etc/kibana.bak
-
-#### 3. Switch the APT repo from 9.x to 8.x
-	ls /etc/apt/sources.list.d/            # find the elastic-9.x file
 	sudo rm /etc/apt/sources.list.d/elastic-9.x.list
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
 	sudo apt update
-
-#### 4. Install the exact matching version
-	apt list -a kibana                      # confirm 8.19.22 is available
 	sudo apt install kibana=8.19.22 --allow-downgrades
-
-#### 5. Prevent an accidental upgrade to 9.x
 	sudo apt-mark hold kibana
-
-#### 6. Start it
 	sudo systemctl daemon-reload
 	sudo systemctl start kibana
 	sudo journalctl -u kibana -f
@@ -145,17 +130,11 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 ### Lancement de l'interface Kibana :
 
 	sudo ss -ltnp | grep 5601
-	
-doit retourner :
-	
-	LISTEN 0      511             127.0.0.1:5601       0.0.0.0:*    users:(("MainThread",pid=57610,fd=22))
-	
-	curl -I http://127.0.0.1:5601 # Se connecter à http://127.0.0.1:5601
+	curl -I http://127.0.0.1:5601
 	sudo /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana # Rentrer le code dans le site
 	sudo /usr/share/kibana/bin/kibana-verification-code # Rentrer le code de vérification dans le site
 
 Recuperation du mot de passe :
-
 
 	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe si ca na pas déjà été fait avant
 
@@ -183,9 +162,13 @@ Analytics puis Discover pour voir les analyses
 On peut filtrer par niveau de dangerosité dans le KQL avec la formule rule.level >= 10
 avec le niveau de danger qui varie entre 0 et 15.
 
+
+
 ## Interface Kibana :
 <img width="1798" height="966" alt="image" src="https://github.com/user-attachments/assets/67f72ad2-62bf-4451-a753-2cc1c5feb3fd" />
 Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
+
+
 
 ## Scénarios de tests :
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance.
@@ -249,20 +232,6 @@ https://nmap.org/ncrack/
 	
 ## Menace de chaque attaque :
 
-### Attaque par dictionnaire :
-  
-<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/fdc6bc76-0dbf-4edf-a658-6e3ddbb8525e" />
-
-* *Vol de données personnelles :* il peut consulter des informations confidentielles et accéder a son compte.
-* *Usurpation d'identité :* il peut se faire passer pour la victime (permettrait de faire de l'usurpation hiérarchique, de la fraude au président, etc)
-* *Utilisation sur d'autres comptes :* l'attaquant pourrait réutiliser ce même mot de passe sur d'autres applications.
-
-### Scan de ports :
-<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/204a84c3-a0e8-47a2-aa87-c96362c41e94" />
-
-* *Découverte des services exposés :* l'attaquant identifie les applications accessibles depuis le réseau.
-* *Repérage des vulnérabilités :* les services détectés peuvent être examinés pour rechercher des failles de sécurité dans le but d'être exploité
-
 ### Déni de service (DoS) :
 
 <img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/12e5fc80-e273-481a-af1f-6b0d643b6f4a" />
@@ -271,21 +240,22 @@ https://nmap.org/ncrack/
 * *Pertes financières :* l'indisponibilité peut entraîner des coûts et nuire à la réputation.
 * *Saturation de l'infrastructure :* les serveurs, les réseaux ou les équipements de sécurité peuvent être surchargés.
 
-### Trafic HTTP frauduleux :
+### Scan de ports :
 
-<img width="1615" height="795" alt="image" src="https://github.com/user-attachments/assets/75e553b3-5977-4852-be78-2e0b6ede9586" />
+<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/204a84c3-a0e8-47a2-aa87-c96362c41e94" />
 
-* *Vol de données :* des requêtes malveillantes peuvent chercher à récupérer des informations confidentielles.
-* *Exploitation de vulnérabilités :* certaines requêtes peuvent viser des failles dans l'application Web.
-* *Contournement des mécanismes de sécurité :* des requêtes spécialement conçues peuvent chercher à contourner les contrôles d'accès.
+* *Découverte des services exposés :* l'attaquant identifie les applications accessibles depuis le réseau.
+* *Repérage des vulnérabilités :* les services détectés peuvent être examinés pour rechercher des failles de sécurité dans le but d'être exploité
 
-### Spearphishing : 
 
-* *Vol d'identifiants :*  la victime peut transmettre son nom d'utilisateur et son mot de passe à un attaquant.
-* *Usurpation d'identité :* les identifiants volés peuvent servir à se faire passer pour la victime.
-* *Compromission de comptes :* l'attaquant peut accéder aux courriels, aux fichiers ou aux applications autorisés pour le compte compromis.
-* *Propagation de l'attaque :* un compte compromis peut être utilisé pour envoyer de nouveaux messages frauduleux à des collègues ou à des supérieurs hiérarchiques.
-* *Vol de données confidentielles :* l'attaquant peut consulter ou récupérer les informations auxquelles le compte donne accès.
+### Attaque par dictionnaire :
+  
+<img width="1605" height="787" alt="image(1)" src="https://github.com/user-attachments/assets/fdc6bc76-0dbf-4edf-a658-6e3ddbb8525e" />
+
+* *Vol de données personnelles :* il peut consulter des informations confidentielles et accéder a son compte.
+* *Usurpation d'identité :* il peut se faire passer pour la victime (permettrait de faire de l'usurpation hiérarchique, de la fraude au président, etc)
+* *Utilisation sur d'autres comptes :* l'attaquant pourrait réutiliser ce même mot de passe sur d'autres applications.
+
 
 ### Injections SQL :
 
@@ -294,6 +264,17 @@ https://nmap.org/ncrack/
 * *Vol de données :* récupération de renseignements personnels, de mots de passe ou d'informations confidentielles.
 * *Modification des données :* altération des dossiers, des commandes ou des informations enregistrées.
 * *Suppression de données :* destruction de certaines tables ou informations, selon les privilèges disponibles.
+
+
+### Trafic HTTP frauduleux :
+
+<img width="1615" height="795" alt="image" src="https://github.com/user-attachments/assets/75e553b3-5977-4852-be78-2e0b6ede9586" />
+
+* *Vol de données :* des requêtes malveillantes peuvent chercher à récupérer des informations confidentielles.
+* *Exploitation de vulnérabilités :* certaines requêtes peuvent viser des failles dans l'application Web.
+* *Contournement des mécanismes de sécurité :* des requêtes spécialement conçues peuvent chercher à contourner les contrôles d'accès.
+  
+
 
 
 ## Analyse et conclusion :
