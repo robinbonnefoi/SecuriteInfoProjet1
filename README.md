@@ -6,7 +6,7 @@
   * BONNEFOI Robin
   
   * BEN MAKHLOUF Ines
-  
+<br>
 
 ## Outils utilisés dans notre système : 
 * Wazuh
@@ -16,20 +16,22 @@
 * Filebeat
 * Postfix
 * Suricata
-
+<br>
+  
 ## Outils utilisés pour nos tests en tant qu'attaquant:
 * Nmap
 * Ncrack
 * MikuMikuBeam
+<br>
   
-
 ## Présentation de l'architecture :
 
 L'utilisation de Wazuh et de Suricata permet de détecter différents comportements suspects, tandis que syslog-ng et Filebeat assurent la collecte et le transmission des journaux. Elasticsearch permet de stocker et d'indexer les événements, qui peuvent ensuite être visualisés et analysés dans Kibana. Enfin, Postfix permet d'envoyer des notifications par courriel lorsque certaines alertes atteignent un certain niveau de gravité défini.
-
-## Schéma d'architecture :
+  
+### Schéma d'architecture :
 
 <img width="754" height="397" alt="Schéma_architecture drawio" src="https://github.com/user-attachments/assets/dacfbe40-95bc-488d-9ae2-4dba274c0621" />
+<br>
 
 ## Organisation du GitHub :
 
@@ -52,8 +54,8 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	    └── wazuh/
 	 	    ├── local_rules.xml
 	        └── ossec.conf
-
-		
+<br>
+  	
 ## Installations :
 
 ### Wazuh manager :
@@ -127,9 +129,9 @@ Mettre Kibana en 8.19.22 :
 	sudo systemctl restart postfix
 	sudo nano /var/ossec/etc/ossec.conf # configurer le fichier (voir config)
 	sudo systemctl restart wazuh-manager
+<br>
 
-
-
+  
 ## Lancement de Kibana :
 
 	sudo ss -ltnp | grep 5601
@@ -164,15 +166,15 @@ puis save data view
 Analytics puis Discover pour voir les analyses
 On peut filtrer par niveau de dangerosité dans le KQL avec la formule rule.level >= 10
 avec le niveau de danger qui varie entre 0 et 15.
+<br>
 
-
-
+  
 ## Interface Kibana :
 <img width="1798" height="966" alt="image" src="https://github.com/user-attachments/assets/67f72ad2-62bf-4451-a753-2cc1c5feb3fd" />
 Dans le menu Analytics -> Discover, on peut voir les différents horaires a laquelle les tests ont eu lieu, avec une description et le niveau d'impact. 
+<br>
 
-
-
+  
 ## Scénarios de tests :
 Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la capacité de notre infrastructure de sécurité à détecter et à gérer différents types de cyberattaques. Chaque scénario repose sur un mécanisme d'attaque distinct et permet de tester des aspects spécifiques de notre système de surveillance.
 
@@ -181,8 +183,8 @@ Les scénarios de tests suivants ont été sélectionnés afin d'évaluer la cap
 * **Injections SQL :** Injection de requête SQL dans une requête http envoyé sur un service apache2 hébergé par la VM.
 * **Attaque par dictionnaire :** Brute force SSH utilisant un dictionnaire de mot de passe coomun à l'aide de l'outil Ncrack.
 * **Trafic HTTP frauduleux :** Envoies de requêtes Web malveillantes ou suspectes envoyées à un serveur ou à une application Web dans le but de manipuler son fonctionnement, d'exploiter une vulnérabilité ou d'accéder à des informations sans autorisation. 
-
-	
+<br>
+  
 ## Mise en place des scénarios de tests
 
 ### DOS par HTTP flood :
@@ -217,10 +219,11 @@ https://nmap.org/ncrack/
 ### Injections SQL
 
 #### Installation et mise en place de apache2 :
+
 	sudo apt update
 	sudo apt install apache2
 	sudo systemctl enable --now apache2
-
+	
 #### Attaque :
 	curl -i "http://192.168.56.10/?id=SELECT+*+FROM+users"
 
@@ -229,7 +232,7 @@ https://nmap.org/ncrack/
 
 #### Attaque :
 	curl -i "http://192.168.56.10/?exploit=1"
-
+<br>
 
 
 	
@@ -276,7 +279,7 @@ https://nmap.org/ncrack/
 * *Vol de données :* des requêtes malveillantes peuvent chercher à récupérer des informations confidentielles.
 * *Exploitation de vulnérabilités :* certaines requêtes peuvent viser des failles dans l'application Web.
 * *Contournement des mécanismes de sécurité :* des requêtes spécialement conçues peuvent chercher à contourner les contrôles d'accès.
-  
+<br>  
 
 
 
