@@ -56,7 +56,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 		
 ## Installations :
 
-### Wazuh manager
+### Wazuh manager :
 	sudo apt install -y wazuh-manager
 	curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
 	echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list 10.0.0.132="10.0.0.2" 
@@ -67,19 +67,19 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo systemctl status wazuh-manager
 	
 
-### Suricata et Syslog-ng
+### Suricata et Syslog-ng :
 	sudo apt install suricata syslog-ng
 	nano /etc/syslog-ng/syslog-ng.conf # configurer le fichier (voir config)
 	sudo systemctl restart syslog-ng
 
-### Elasticsearch
+### Elasticsearch :
 	curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
 	sudo apt update && sudo apt install elasticsearch
 	sudo systemctl enable --now elasticsearch   
 	sudo systemctl start elasticsearch.service
 
-#### Mot de passe elsaticsearch
+#### Mot de passe elsaticsearch :
 	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe 
 
 ### Kibana :
