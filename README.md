@@ -79,7 +79,8 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	sudo systemctl enable --now elasticsearch   
 	sudo systemctl start elasticsearch.service
 
-#### Mot de passe elsaticsearch :
+Mot de passe elsaticsearch :
+
 	sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic #ajout du -i pour choisir le mot de passe 
 
 ### Kibana :
@@ -87,7 +88,7 @@ L'utilisation de Wazuh et de Suricata permet de détecter différents comporteme
 	echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/9.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-9.x.list
 	sudo apt-get update && sudo apt-get install kibana   
 
-#### Mettre Kibana en 8.19.22 :
+Mettre Kibana en 8.19.22 :
 
 	sudo systemctl stop kibana
 	sudo rm /etc/apt/sources.list.d/elastic-9.x.list
